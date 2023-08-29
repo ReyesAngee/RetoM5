@@ -122,9 +122,8 @@ st.plotly_chart(fig)
 #############################################################################
 
 # Crear una gráfica de frecuencias para las unidades funcionales (Unit)
-st.header('Relación entre Tiempo de Servicio y Tasa de Deserción')
-fig = px.scatter(Employees, x='Time_of_service', y='Attrition_rate', title='Relación entre Tiempo de Servicio y Tasa de Deserción',
-                 color_discrete_sequence=px.colors.qualitative.Pastel)
+st.header('Gráfica de Frecuencias por Unidad Funcional')
+fig = px.histogram(Employees, x='Unit', title='Frecuencia de Unidades Funcionales')
 st.plotly_chart(fig)
 
 ##############################################################################
@@ -132,33 +131,24 @@ st.plotly_chart(fig)
 # Calcular el índice de deserción por ciudad (Hometown)
 desercion_por_ciudad = Employees.groupby('Hometown')['Attrition_rate'].mean().reset_index()
 
-# Ordenar las ciudades por el índice de deserción de mayor a menor
-desercion_por_ciudad = desercion_por_ciudad.sort_values(by='Attrition_rate', ascending=False)
-
 
 # Crear una gráfica de barras para visualizar el índice de deserción por ciudad
 st.header('Índice de Deserción por Ciudad')
 fig = px.bar(desercion_por_ciudad, x='Hometown', y='Attrition_rate', title='Índice de Deserción por Ciudad')
-fig.update_xaxes(categoryorder='total descending')  # Ordenar las ciudades de mayor a menor deserción
 st.plotly_chart(fig)
 
 ##############################################################################
-# Configurar la paleta de colores pastel de Seaborn
-sns.set(style="whitegrid")
-pastel_palette = sns.color_palette("pastel")
-sns.color_palette("pastel",10)
-
-###################################################################################
 
 # Crear una gráfica para visualizar la relación entre la edad y la tasa de deserción
 st.header('Relación entre Edad y Tasa de Deserción')
 fig = px.scatter(Employees, x='Age', y='Attrition_rate', title='Relación entre Edad y Tasa de Deserción')
 st.plotly_chart(fig)
 
-####################################################################################
-
-
-
+# Crear una gráfica de dispersión para visualizar la relación entre el tiempo de servicio y la tasa de deserción
+st.header('Relación entre Tiempo de Servicio y Tasa de Deserción')
+fig = px.scatter(Employees, x='Time_of_service', y='Attrition_rate', title='Relación entre Tiempo de Servicio y Tasa de Deserción',
+                 color_discrete_sequence=px.colors.qualitative.Pastel)
+st.plotly_chart(fig)
 
 ##############################################################################
 # Cierre de la aplicación
